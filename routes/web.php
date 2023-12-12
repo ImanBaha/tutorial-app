@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Post;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +16,70 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('posts');
-});
+    $posts = Post::all();
+    
 
 
-Route::get('post', function () {
-    return view('post' , [
-       'post' => '<h1>Hello world </h1>' //post
+
+    // foreach ($files as $file){
+    //     $document = YamlFrontMatter::parseFile($file);
+
+    //     $posts[] = new Post(
+    //         $document -> title,
+    //         $document -> excerpt,
+    //         $document -> date,
+    //         $document -> body(),
+    //         $document -> slug
+    //     );
+    // }
+    //  ddd($posts[0]-> title);
+
+    // return view ('posts', ['posts' =>$posts])
+    // $document= YamlFrontMatter::parseFile(
+    //   resource_path('posts/my-fourth-post.html')
+    // );
+    // ddd($document-> matter());
+    return view('posts',  [
+    'posts' => Post::all()
+    
+    
+
     ]);
 });
+
+
+Route::get('posts/{post}', function ($slug) {
+
+//     $path = __DIR__ . "/../resources/posts/{$slug}.html";
+$post = Post::find($slug);
+
+return view( 'post', [
+    'post' => $post
+]);
+//     // dd($path);
+
+//     // return $slug;
+
+//    if (! file_exists($path)){
+//     //    ddd('file does not exist');
+//     // abort (404);
+//     return redirect('/');
+//    }
+//    $post= cache()-> remember("posts.{$slug}", 1200, function () use ($path) {
+//     var_dump('file_get_contents');
+//     return file_get_contents($path);
+
+       
+//    });
+
+//    $post = file_get_contents($path);
+
+//     //    $post = file_get_contents(__DIR__ . "/../resources/posts/{$slug}.html");//post
+    
+//     return view ('post', [ 
+//         'post' => $post
+    
+    
+//     ]);
+// })->whereAlpha('post');
+})->where('post', '[A-z_\-]+');
