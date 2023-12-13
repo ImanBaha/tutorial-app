@@ -51,10 +51,11 @@ Route::get('/', function () {
 Route::get('posts/{post}', function ($slug) {
 
 //     $path = __DIR__ . "/../resources/posts/{$slug}.html";
-$post = Post::find($slug);
+// $post = Post::findOrFail($slug);
+
 
 return view( 'post', [
-    'post' => $post
+    'post' => Post::findOrFail($slug)
 ]);
 //     // dd($path);
 
@@ -82,4 +83,4 @@ return view( 'post', [
     
 //     ]);
 // })->whereAlpha('post');
-})->where('post', '[A-z_\-]+');
+});
