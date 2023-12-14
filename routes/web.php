@@ -48,14 +48,14 @@ Route::get('/', function () {
 });
 
 
-Route::get('posts/{post}', function ($slug) {
+Route::get('posts/{post:slug}', function (Post $post) {
 
 //     $path = __DIR__ . "/../resources/posts/{$slug}.html";
 // $post = Post::findOrFail($slug);
 
 
 return view( 'post', [
-    'post' => Post::findOrFail($slug)
+    'post' => $post
 ]);
 //     // dd($path);
 
